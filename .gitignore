@@ -1,3 +1,9 @@
+# GLOBAL
+.*
+!.gitignore
+*~
+
+# ECLIPSE
 *.pydevproject
 .project
 .metadata
@@ -26,3 +32,13 @@ target/
 target
 .settings/*
 !.settings/.jsdtscope
+
+# INTELLIJ IDEA
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# SUBLIME TEXT
+/*.sublime-project
+*.sublime-workspace
