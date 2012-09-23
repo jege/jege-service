@@ -33,5 +33,13 @@ public abstract class AbstractEntityFacade<E extends AbstractEntity> extends Abs
     public void update(E entity) {
         getService().update(entity);
     }
+    
+    public void remove(String id) {
+        getService().remove(id);
+    }
+    
+    public void remove(E entity) {
+        getService().remove(entity);
+    }
 
 }

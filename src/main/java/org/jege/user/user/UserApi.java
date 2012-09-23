@@ -11,7 +11,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 import org.jege.abs.api.AbsractEntityApi;
@@ -43,7 +42,6 @@ public class UserApi extends AbsractEntityApi<User> {
         try {
             user = JsonMapper.jsonToObject(userJson, User.class);
             mapUser = JsonMapper.jsonToMap(userJson);
-            System.out.println(mapUser.get("confirmPassword"));
         } catch (JsonParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -89,8 +87,7 @@ public class UserApi extends AbsractEntityApi<User> {
         if(id != null) {
             Map<String, String> responseBody = new HashMap<String, String>();
             responseBody.put("userid", id);
-            NewCookie useridCookie = new NewCookie("userid", id);
-            return Response.ok(JsonMapper.objectToJson(responseBody), MediaType.APPLICATION_JSON).cookie(useridCookie).build();
+            return Response.ok(JsonMapper.objectToJson(responseBody), MediaType.APPLICATION_JSON).build();
         } else {
             return Response.status(401).build();
         }

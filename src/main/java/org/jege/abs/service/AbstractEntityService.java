@@ -75,4 +75,8 @@ public abstract class AbstractEntityService<E extends AbstractEntity> extends Ab
         }
     }
     
+    public void remove(String id) {
+        remove(find(id));
+    }
+    
 }

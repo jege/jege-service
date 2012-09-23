@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -43,5 +44,11 @@ public abstract class AbsractEntityApi<E extends AbstractEntity> extends Abstrac
         E entity = (E) JsonMapper.jsonToObject(entityJson, getFacade().getEntityClass());
         getFacade().update(entity);
         return Response.ok().build();
+    }
+    
+    @DELETE
+    @Path("/{id:"+AbstractEntity.ID_PATTERN+"}")
+    public void deleteEntityById(@PathParam("id") String id) {
+       getFacade().remove(id);
     }
 }
