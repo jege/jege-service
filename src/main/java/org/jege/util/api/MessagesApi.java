@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 @RequestScoped
 public class MessagesApi {
-    private List<MessageApi> messages = new ArrayList<>();
+    private List<MessageApi> messages = new ArrayList<MessageApi>();
     
     public List<MessageApi> get() {
         return messages;
@@ -30,7 +30,7 @@ public class MessagesApi {
         if(severity == null) {
             return get();
         } else {
-            List<MessageApi> result = new ArrayList<>();
+            List<MessageApi> result = new ArrayList<MessageApi>();
             for(MessageApi message : messages) {
                 if(severity.equals(message.getSeverity())) {
                     result.add(message);
@@ -44,7 +44,7 @@ public class MessagesApi {
         if(channel == null) {
             return get();
         } else {
-            List<MessageApi> result = new ArrayList<>();
+            List<MessageApi> result = new ArrayList<MessageApi>();
             for(MessageApi message : messages) {
                 if(channel.equals(message.getChannel())) {
                     result.add(message);
@@ -60,7 +60,7 @@ public class MessagesApi {
         } else if(channel == null) {
             return get(severity);
         } else {
-            List<MessageApi> result = new ArrayList<>();
+            List<MessageApi> result = new ArrayList<MessageApi>();
             for(MessageApi message : messages) {
                 if(severity.equals(message.getSeverity())
                         && channel.equals(message.getChannel())) {
