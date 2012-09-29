@@ -2,6 +2,7 @@ package org.jege.util.api;
 
 import java.io.IOException;
 
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,11 +15,13 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jege.util.message.MessagesClient;
+
 @WebFilter("/api/*")
 public class ApiFilter implements Filter {
     
     @Inject
-    private MessagesApi messages;
+    private Instance<MessagesClient> messagesInstance;
     
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -51,6 +54,7 @@ public class ApiFilter implements Filter {
             
         }
         
+        MessagesClient messages = messagesInstance.get();
         output.print(",");
         output.print("\"messages\":"+messages.getJson());
         output.print("}");

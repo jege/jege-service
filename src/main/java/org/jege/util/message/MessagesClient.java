@@ -1,4 +1,4 @@
-package org.jege.util.api;
+package org.jege.util.message;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,17 +7,17 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 
 import org.jege.util.JsonMapper;
-import org.jege.util.api.MessageApi.Channel;
-import org.jege.util.api.MessageApi.Severity;
+import org.jege.util.message.MessageClient.Type;
+import org.jege.util.message.MessageClient.Severity;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 @RequestScoped
-public class MessagesApi {
-    private List<MessageApi> messages = new ArrayList<MessageApi>();
+public class MessagesClient {
+    private List<MessageClient> messages = new ArrayList<MessageClient>();
     
-    public List<MessageApi> get() {
+    public List<MessageClient> get() {
         return messages;
     }
     
@@ -26,12 +26,12 @@ public class MessagesApi {
     }
     
     
-    public List<MessageApi> get(MessageApi.Severity severity) {
+    public List<MessageClient> get(MessageClient.Severity severity) {
         if(severity == null) {
             return get();
         } else {
-            List<MessageApi> result = new ArrayList<MessageApi>();
-            for(MessageApi message : messages) {
+            List<MessageClient> result = new ArrayList<MessageClient>();
+            for(MessageClient message : messages) {
                 if(severity.equals(message.getSeverity())) {
                     result.add(message);
                 }
@@ -40,13 +40,13 @@ public class MessagesApi {
         }
     }
     
-    public List<MessageApi> get(String channel) {
+    public List<MessageClient> get(String channel) {
         if(channel == null) {
             return get();
         } else {
-            List<MessageApi> result = new ArrayList<MessageApi>();
-            for(MessageApi message : messages) {
-                if(channel.equals(message.getChannel())) {
+            List<MessageClient> result = new ArrayList<MessageClient>();
+            for(MessageClient message : messages) {
+                if(channel.equals(message.getType())) {
                     result.add(message);
                 }
             }
@@ -54,16 +54,16 @@ public class MessagesApi {
         }
     }
     
-    public List<MessageApi> get(MessageApi.Severity severity, String channel) {
+    public List<MessageClient> get(MessageClient.Severity severity, String channel) {
         if(severity == null) {
             return get(channel);
         } else if(channel == null) {
             return get(severity);
         } else {
-            List<MessageApi> result = new ArrayList<MessageApi>();
-            for(MessageApi message : messages) {
+            List<MessageClient> result = new ArrayList<MessageClient>();
+            for(MessageClient message : messages) {
                 if(severity.equals(message.getSeverity())
-                        && channel.equals(message.getChannel())) {
+                        && channel.equals(message.getType())) {
                     result.add(message);
                 }
             }
@@ -72,49 +72,49 @@ public class MessagesApi {
     }
     
     // GENERIC
-    public void add(MessageApi message) {
+    public void add(MessageClient message) {
         messages.add(message);
     }
     
     public void add(String summary) {
-        add(new MessageApi(summary));
+        add(new MessageClient(summary));
     }
     
     public void add(String summary, String detail) {
-        add(new MessageApi(summary, detail));
+        add(new MessageClient(summary, detail));
     }
     
-    public void add(String summary, Channel channel) {
-        add(new MessageApi(summary, channel));
+    public void add(String summary, Type channel) {
+        add(new MessageClient(summary, channel));
     }
     
     public void add(String summary, Severity severity) {
-        add(new MessageApi(summary, severity));
+        add(new MessageClient(summary, severity));
     }
     
     public void add(String summary, String detail, Severity severity) {
-        add(new MessageApi(summary, detail, severity));
+        add(new MessageClient(summary, detail, severity));
     }
     
-    public void add(String summary, String detail, Channel channel) {
-        add(new MessageApi(summary, detail, channel));
+    public void add(String summary, String detail, Type channel) {
+        add(new MessageClient(summary, detail, channel));
     }
     
-    public void add(String summary, Severity severity, Channel channel) {
-        add(new MessageApi(summary, severity, channel));
+    public void add(String summary, Severity severity, Type channel) {
+        add(new MessageClient(summary, severity, channel));
     }
     
-    public void add(String summary, String detail, Severity severity, Channel channel) {
-        add(new MessageApi(summary, detail, severity, channel));
+    public void add(String summary, String detail, Severity severity, Type channel) {
+        add(new MessageClient(summary, detail, severity, channel));
     }
     
     // DEBUG
     public void debug(String summary) {
-        add(summary, Channel.DEBUG);
+        add(summary, Type.DEBUG);
     }
     
     public void debug(String summary, String detail) {
-        add(summary, detail, Channel.DEBUG);
+        add(summary, detail, Type.DEBUG);
     }
     
     // ERROR
@@ -126,11 +126,11 @@ public class MessagesApi {
         add(summary, detail, Severity.ERROR);
     }
     
-    public void error(String summary, Channel channel) {
+    public void error(String summary, Type channel) {
         add(summary, Severity.ERROR, channel);
     }
     
-    public void error(String summary, String detail, Channel channel) {
+    public void error(String summary, String detail, Type channel) {
         add(summary, detail, Severity.ERROR, channel);
     }
     
@@ -143,11 +143,11 @@ public class MessagesApi {
         add(summary, detail, Severity.WARNING);
     }
     
-    public void warn(String summary, Channel channel) {
+    public void warn(String summary, Type channel) {
         add(summary, Severity.WARNING, channel);
     }
     
-    public void warn(String summary, String detail, Channel channel) {
+    public void warn(String summary, String detail, Type channel) {
         add(summary, detail, Severity.WARNING, channel);
     }
     
@@ -160,11 +160,11 @@ public class MessagesApi {
         add(summary, detail, Severity.SUCCESS);
     }
     
-    public void success(String summary, Channel channel) {
+    public void success(String summary, Type channel) {
         add(summary, Severity.SUCCESS, channel);
     }
     
-    public void success(String summary, String detail, Channel channel) {
+    public void success(String summary, String detail, Type channel) {
         add(summary, detail, Severity.SUCCESS, channel);
     }
     
@@ -177,11 +177,11 @@ public class MessagesApi {
         add(summary, detail, Severity.INFO);
     }
     
-    public void info(String summary, Channel channel) {
+    public void info(String summary, Type channel) {
         add(summary, Severity.INFO, channel);
     }
     
-    public void info(String summary, String detail, Channel channel) {
+    public void info(String summary, String detail, Type channel) {
         add(summary, detail, Severity.INFO, channel);
     }
 }

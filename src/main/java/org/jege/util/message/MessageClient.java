@@ -1,55 +1,55 @@
-package org.jege.util.api;
+package org.jege.util.message;
 
-public class MessageApi {
+public class MessageClient {
     public static final Severity DEFAULT_SEVERITY = Severity.INFO;
-    public static final Channel DEFAULT_CHANNEL = Channel.GLOBAL;
+    public static final Type DEFAULT_CHANNEL = Type.GLOBAL;
     
     private String summary;
     private String detail;
     private Severity severity = DEFAULT_SEVERITY;
-    private Channel channel = DEFAULT_CHANNEL;
+    private Type channel = DEFAULT_CHANNEL;
     
-    public MessageApi() {
+    public MessageClient() {
         super();
     }
     
-    public MessageApi(String summary) {
+    public MessageClient(String summary) {
         this();
         this.summary = summary;
     }
     
-    public MessageApi(String summary, String detail) {
+    public MessageClient(String summary, String detail) {
         this(summary);
         this.detail = detail;
     }
     
-    public MessageApi(String summary, Channel channel) {
+    public MessageClient(String summary, Type channel) {
         this(summary);
         this.channel = channel;
     }
     
-    public MessageApi(String summary, Severity severity) {
+    public MessageClient(String summary, Severity severity) {
         this(summary);
         this.severity = severity;
     }
     
-    public MessageApi(String summary, String detail, Severity severity) {
+    public MessageClient(String summary, String detail, Severity severity) {
         this(summary, severity);
         this.detail= detail;
     }
     
-    public MessageApi(String summary, String detail, Channel channel) {
+    public MessageClient(String summary, String detail, Type channel) {
         this(summary, detail);
         this.channel= channel;
     }
     
-    public MessageApi(String summary, Severity severity, Channel channel) {
+    public MessageClient(String summary, Severity severity, Type channel) {
         this(summary);
         this.channel= channel;
         this.severity = severity;
     }
     
-    public MessageApi(String summary, String detail, Severity severity, Channel channel) {
+    public MessageClient(String summary, String detail, Severity severity, Type channel) {
         this(summary, detail, severity);
         this.channel= channel;
     }
@@ -61,34 +61,18 @@ public class MessageApi {
         INFO;
     }
     
-    public enum Channel {
-        GLOBAL(true),
-        NOTIFY(true),
-        DEBUG(true),
-        MODAL(false),
-        FORM(false);
-        
-        public static final String PREFIX_NON_UNIQUE = "@";
-        private boolean unique;
-        
-        private Channel(boolean unique) {
-            this.unique = unique;
-        }
-        
-        public boolean isUnique() {
-            return unique;
-        }
-        
-        public String getName() {
-            return (isUnique() ? "" : PREFIX_NON_UNIQUE) + toString().toLowerCase();
-        }
+    public enum Type {
+        GLOBAL,
+        NOTIFY,
+        DEBUG,
+        VALIDATION;
     }
 
-    public Channel getChannel() {
+    public Type getType() {
         return channel;
     }
 
-    public void setChannel(Channel channel) {
+    public void setChannel(Type channel) {
         this.channel = channel;
     }
 

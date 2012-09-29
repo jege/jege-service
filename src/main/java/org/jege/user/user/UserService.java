@@ -15,4 +15,8 @@ public class UserService extends AbstractEntityService<User> {
     public User findByUsername(String username) {
         return createNamedTypedQuery(User.findByUsername).setParameter("username", username).getSingleResult();
     }
+    
+    public User findByEmail(String email) {
+        return createNamedTypedQuery(User.findByEmail).setParameter("email", email).getSingleResult();
+    }
 }

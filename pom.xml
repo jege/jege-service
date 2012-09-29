@@ -23,6 +23,7 @@
 			with JBoss EAP 6. It requires you have access to the JBoss EAP 6 maven repository. -->
 		<!-- <jboss.bom.version>1.0.0.M12-redhat-1</jboss.bom.version>> -->
 		<jackson.version>2.0.2</jackson.version>
+		<usertype.version>3.0.0.CR4</usertype.version>
 	</properties>
 
 
@@ -89,6 +90,12 @@
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 		<!-- Import the EJB API, we use provided scope as the API is included in 
 			JBoss AS 7 -->
@@ -130,6 +137,8 @@
 		</dependency>
 
 		<!-- Now we declare any tools needed -->
+		
+		
 
 		<!-- Annotation processor to generate the JPA 2.0 metamodel classes for 
 			typesafe criteria queries -->
@@ -168,6 +177,12 @@
 			<artifactId>arquillian-protocol-servlet</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.spec.javax.el</groupId>
+			<artifactId>jboss-el-api_2.2_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 		<!-- Jackson -->
 		<dependency>
@@ -190,6 +205,27 @@
 			<version>${jackson.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		
+<!-- 		<dependency>
+			<groupId>org.jadira.usertype</groupId>
+			<artifactId>usertype.core</artifactId>
+			<version>${usertype.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jadira.usertype</groupId>
+			<artifactId>usertype.spi</artifactId>
+			<version>${usertype.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jadira.usertype</groupId>
+			<artifactId>usertype.extended</artifactId>
+			<version>${usertype.version}</version>
+			<scope>compile</scope>
+		</dependency> -->
 
 	</dependencies>
 
@@ -303,4 +339,21 @@
 		</profile>
 
 	</profiles>
+	
+	<repositories>
+		<repository>
+			<id>usertype-sourceforge-net</id>
+			<name>SourceForge Usertype</name>
+			<url>http://usertype.sourceforge.net/m2-repo/</url>
+			<layout>default</layout>
+            <releases>
+            	<enabled>true</enabled>
+            	<updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+            	<enabled>true</enabled>
+            	<updatePolicy>never</updatePolicy>
+            </snapshots>
+		</repository>
+	</repositories>
 </project>

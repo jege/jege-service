@@ -15,12 +15,14 @@ import org.jege.abs.entity.AbstractEntity;
         uniqueConstraints = { @UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email") })
 @NamedQueries( {
     @NamedQuery(name = User.findAll, query = "from User"),
-    @NamedQuery(name = User.findByUsername, query = "from User where username = :username")
+    @NamedQuery(name = User.findByUsername, query = "from User where username = :username"),
+    @NamedQuery(name = User.findByEmail, query = "from User where email = :email")
 })
 public class User extends AbstractEntity {
     public static final String CLASS_NAME = "User";
     public static final String findAll = CLASS_NAME + AbstractEntity.FIND_ALL;
     public static final String findByUsername = CLASS_NAME + ".findByUsername";
+    public static final String findByEmail = CLASS_NAME + ".findByEmail";
     
     private String username;
     private String password;

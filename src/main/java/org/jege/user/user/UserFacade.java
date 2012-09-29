@@ -18,14 +18,15 @@ public class UserFacade extends AbstractEntityFacade<User> {
         return userService;
     }
     
-    public String signIn(String username, String password) {
-        String result = null;
+    public User findByEmail(String email) {
+        return getService().findByEmail(email);
+    }
+    
+    public User signIn(String username, String password) {
         User user = getService().findByUsername(username);
-        
         if(user != null && user.getPassword().equals(password)) {
-            result = user.getId();
+            return user;
         }
-        
-        return result;
+        return null;
     }
 }

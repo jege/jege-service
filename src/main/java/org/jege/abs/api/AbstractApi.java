@@ -8,14 +8,14 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.jege.util.api.MessagesApi;
+import org.jege.util.message.MessagesClient;
 
 public abstract class AbstractApi {
     @Context
     protected UriInfo uriInfo;
     
     @Inject
-    private MessagesApi messages;
+    protected MessagesClient messages;
     
     @OPTIONS
     public Response getOptions() {
