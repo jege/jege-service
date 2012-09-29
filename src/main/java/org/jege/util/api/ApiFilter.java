@@ -35,6 +35,7 @@ public class ApiFilter implements Filter {
             throw new ServletException("Only HttpServletRequest requests are supported");
         }
         
+        final HttpServletRequest httpRequest = (HttpServletRequest) request;
         final HttpServletResponse httpResponse = (HttpServletResponse) response;
         
         httpResponse.addHeader("Access-Control-Allow-Origin", "*");
@@ -42,26 +43,30 @@ public class ApiFilter implements Filter {
         httpResponse.addHeader("Access-Control-Allow-Headers", "origin, x-requested-with, content-type, accept");
         httpResponse.addHeader("Access-Control-Max-Age", "1728000");
         
-        ServletOutputStream output = httpResponse.getOutputStream();
-        output.print("{");
-        output.print("\"status\":\""+httpResponse.getStatus()+"\",");
-        output.print("\"body\":");
-        output.flush();
-        
-        try {
+        if("OPTIONS".equals(httpRequest.getMethod())) {
             chain.doFilter(request, httpResponse);
-        } catch(Exception e) {
+        } else {
+            ServletOutputStream output = httpResponse.getOutputStream();
+            output.print("{");
+            output.print("\"status\":\""+httpResponse.getStatus()+"\",");
+            output.print("\"body\":");
+            output.flush();
             
-        }
-        
-        MessagesClient messages = messagesInstance.get();
-        output.print(",");
-        output.print("\"messages\":"+messages.getJson());
-        output.print("}");
-        output.flush();
-        
-        if(ApiConfiguration.PARAM_VALUE_TRUE.equals(request.getParameter(ApiConfiguration.PARAM_SUPPRESS_RESPONSE_CODE))) {
-            httpResponse.setStatus(HttpServletResponse.SC_OK);
+            try {
+                chain.doFilter(request, httpResponse);
+            } catch(Exception e) {
+                
+            }
+            
+            MessagesClient messages = messagesInstance.get();
+            output.print(",");
+            output.print("\"messages\":"+messages.getJson());
+            output.print("}");
+            output.flush();
+            
+            if(ApiConfiguration.PARAM_VALUE_TRUE.equals(request.getParameter(ApiConfiguration.PARAM_SUPPRESS_RESPONSE_CODE))) {
+                httpResponse.setStatus(HttpServletResponse.SC_OK);
+            }
         }
     }
     
