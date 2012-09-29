@@ -1,7 +1,6 @@
 package org.jege.action.recurrentEffect;
 
 import javax.persistence.Entity;
-
 import org.jege.abs.entity.AbstractEntity;
 
 @Entity
